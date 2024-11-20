@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class StartScreen extends StatelessWidget {
-  const StartScreen({super.key});
-
+  const StartScreen(this.startQuiz, {super.key});
+  //created argument for button function to switch screens
+  final void Function() startQuiz;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -23,9 +24,9 @@ class StartScreen extends StatelessWidget {
             style: TextStyle(color: Colors.white, fontSize: 24),
           ),
           const SizedBox(height: 30),
-          //added button for navigation to other screen, with icon constructor
+          //* added button for navigation to other screen, with icon constructor
           OutlinedButton.icon(
-            onPressed: () {},
+            onPressed: startQuiz,
             style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
             //added arrow icon in button
             icon: const Icon(
