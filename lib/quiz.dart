@@ -9,24 +9,29 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  // using ? for null
-  Widget? activeScreen;
-  // using init method to excute active screen functionality before build method excuted.
-  @override
-  void initState() {
-    activeScreen = StartScreen(switchScreen);
-    super.initState();
-  }
-
+/* using ? for null
+Widget? activeScreen; */
+// solving switch screen using Ternary operator
+  var activeScreen = "start-screen";
+/* using init method to excute active screen functionality before build method excuted.
+@override
+void initState() {
+  activeScreen = StartScreen(switchScreen);
+  super.initState();
+}
+*/
 // created Switch Method Function
   void switchScreen() {
     setState(() {
-      activeScreen = const QuestionScreen();
+      activeScreen = "questions-screen";
     });
   }
-
   @override
   Widget build(BuildContext context) {
+    // created final variable to switch screen
+    final screenWidget = activeScreen == "start-screen"
+        ? StartScreen(switchScreen)
+        : const QuestionScreen();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -38,8 +43,8 @@ class _QuizState extends State<Quiz> {
               Color.fromARGB(255, 41, 3, 63),
             ], begin: Alignment.topLeft, end: Alignment.bottomRight),
           ),
-          // created actionScreen to Switch between Pages
-          child: activeScreen,
+          // created activeScreen to Switch between Pages using (? :) conditional method
+          child: screenWidget,
         ),
       ),
     );
