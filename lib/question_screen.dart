@@ -10,42 +10,48 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionState extends State<QuestionScreen> {
+  var currentQuestionIndex = 0;
+
+  void currentAnswer() {
+    // updating index by 1.
+    currentQuestionIndex++;
+  }
+
   @override
   Widget build(BuildContext context) {
+    // storing current question index.
+    final currentQuestion = questions[currentQuestionIndex];
     return SizedBox(
-      //using full available width
+      //using full available width.
       width: double.infinity,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            "Question",
-            style: TextStyle(fontSize: 24, color: Colors.white),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          //using custom button
-          AnswerButton(
-            onTap: () {},
-            buttonText: "Answer",
-          ),
-           //using custom button
-          AnswerButton(
-            onTap: () {},
-            buttonText: "Answer",
-          ),
-           //using custom button
-          AnswerButton(
-            onTap: () {},
-            buttonText: "Answer",
-          ),
-           //using custom button
-          AnswerButton(
-            onTap: () {},
-            buttonText: "Answer",
-          ),
-        ],
+      child: Container(
+        margin: const EdgeInsets.all(40),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              currentQuestion.text,
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            Container(
+              color: Colors.black,
+            ),
+
+            //using custom button first answer
+            // using spreed operator to create list of Answer Widgets
+            ...currentQuestion.shuffelAnswers().map((answer) {
+              return AnswerButton(buttonText: answer, onTap: () {});
+            }),
+          ],
+        ),
       ),
     );
   }

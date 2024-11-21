@@ -17,7 +17,10 @@ class AnswerButton extends StatelessWidget {
         ),
       ),
       onPressed: onTap,
-      child: Text(buttonText),
+      child: Text(
+        buttonText,
+        style: const TextStyle(fontSize: 16),
+      ),
     );
   }
 }
