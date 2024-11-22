@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // created reuseable answer button
 class AnswerButton extends StatelessWidget {
@@ -10,16 +11,15 @@ class AnswerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         foregroundColor: Colors.black,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       ),
       onPressed: onTap,
       child: Text(
         buttonText,
-        style: const TextStyle(fontSize: 16),
+        style: GoogleFonts.lato(fontSize: 18, fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center,
       ),
     );
   }
