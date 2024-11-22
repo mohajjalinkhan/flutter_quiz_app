@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quiz_app/question_screen.dart';
+import 'package:flutter_quiz_app/result_screen.dart';
 import "package:flutter_quiz_app/start_screen.dart";
+import 'package:flutter_quiz_app/data/questions.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -11,8 +13,7 @@ class Quiz extends StatefulWidget {
 class _QuizState extends State<Quiz> {
 /* using ? for null
 Widget? activeScreen; */
-// solving switch screen using Ternary operator
-  var activeScreen = "start-screen";
+
 /* using init method to excute active screen functionality before build method excuted.
 @override
 void initState() {
@@ -20,18 +21,40 @@ void initState() {
   super.initState();
 }
 */
+// solving switch screen using IF condition
+  var activeScreen = "start-screen";
+  // storing seclected answer in slecedAnwer List(Array)
+  List<String> selectedAnswer = [];
+
 // created Switch Method Function
   void switchScreen() {
     setState(() {
       activeScreen = "questions-screen";
     });
   }
+
+  // chooseSelectedAnswer Function
+  void chooseSelectedAnswerFun(String answer) {
+    selectedAnswer.add(answer);
+    // checking selected answer is equels to the give questions from our data model questions List.
+    if (selectedAnswer.length == questions.length) {
+      setState(() {
+        selectedAnswer = [];
+        activeScreen = "result-screen";
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // created final variable to switch screen
-    final screenWidget = activeScreen == "start-screen"
-        ? StartScreen(switchScreen)
-        : const QuestionScreen();
+    // created variable to switch screen
+    Widget screenWidget = StartScreen(switchScreen);
+    if (activeScreen == "questions-screen") {
+      screenWidget = QuestionScreen(onSelectAnswer: chooseSelectedAnswerFun);
+    }
+    if (activeScreen == "result-screen") {
+      screenWidget = ResultScreen(chosenAnswers: selectedAnswer,);
+    }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(

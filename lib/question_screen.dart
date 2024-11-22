@@ -4,17 +4,23 @@ import 'package:flutter_quiz_app/answer_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuestionScreen extends StatefulWidget {
-  const QuestionScreen({super.key});
+  const QuestionScreen({super.key, required this.onSelectAnswer});
+
+  // created function which takes one parameter to store selected Answer by the user.
+  final Function(String answer) onSelectAnswer;
 
   @override
   State<QuestionScreen> createState() => _QuestionState();
 }
 
 class _QuestionState extends State<QuestionScreen> {
+  //accessing current Index in options list
   var currentQuestionIndex = 0;
-
-  void currentAnswer() {
+  // storing selected Answer and updating current Index of Questons Array List
+  void currentAnswer(String selectedAnswer) {
     setState(() {
+      // accessing Widget Class in State Class by using (widget.)
+      widget.onSelectAnswer(selectedAnswer);
       // updating index by 1, if answer button cliked.
       currentQuestionIndex++;
     });
@@ -36,10 +42,9 @@ class _QuestionState extends State<QuestionScreen> {
             Text(
               currentQuestion.text,
               style: GoogleFonts.lato(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold
-                  ),
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(
@@ -48,7 +53,9 @@ class _QuestionState extends State<QuestionScreen> {
             //using custom button first answer
             // using spreed operator to create list of Answer Widgets
             ...currentQuestion.shuffelAnswers().map((answer) {
-              return AnswerButton(buttonText: answer, onTap: currentAnswer);
+              return AnswerButton(buttonText: answer, onTap: (){
+                currentAnswer(answer);
+              });
             }),
           ],
         ),
