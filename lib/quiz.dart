@@ -3,6 +3,7 @@ import 'package:flutter_quiz_app/question_screen.dart';
 import 'package:flutter_quiz_app/result_screen.dart';
 import "package:flutter_quiz_app/start_screen.dart";
 import 'package:flutter_quiz_app/data/questions.dart';
+import 'package:flutter_quiz_app/question_screen.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -11,6 +12,9 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+  List<String> _selectedAnswers = [];
+  var _activeScreen = 'start-screen';
+   
 /* using ? for null
 Widget? activeScreen; */
 
@@ -33,6 +37,12 @@ void initState() {
     });
   }
 
+  void restartQuiz() {
+    setState(() {
+      _selectedAnswers = [];
+      _activeScreen = 'questions-screen';
+    });
+  }
   // chooseSelectedAnswer Function
   void chooseSelectedAnswerFun(String answer) {
     selectedAnswer.add(answer);
@@ -44,7 +54,6 @@ void initState() {
       });
     }
   }
-
   @override
   Widget build(BuildContext context) {
     // created variable to switch screen
@@ -53,7 +62,7 @@ void initState() {
       screenWidget = QuestionScreen(onSelectAnswer: chooseSelectedAnswerFun);
     }
     if (activeScreen == "result-screen") {
-      screenWidget = ResultScreen(chosenAnswers: selectedAnswer,);
+      screenWidget = ResultsScreen(chosenAnswers: selectedAnswer, onRestart: restartQuiz,);
     }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
