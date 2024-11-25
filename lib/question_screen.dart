@@ -48,7 +48,7 @@ class _QuestionState extends State<QuestionScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(
-              height: 50,
+              height: 30,
             ),
             //using custom button first answer
             // using spreed operator to create list of Answer Widgets

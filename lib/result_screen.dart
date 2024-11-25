@@ -1,7 +1,7 @@
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quiz_app/data/questions.dart';
-import 'package:flutter_quiz_app/questions_summary.dart';
+import 'package:flutter_quiz_app/questions_summary/questions_summary.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ResultsScreen extends StatelessWidget {
@@ -15,7 +15,7 @@ class ResultsScreen extends StatelessWidget {
   final List<String> chosenAnswers;
 
   List<Map<String, Object>> get summaryData {
-    final List<Map<String, Object>> summary = [];
+    List<Map<String, Object>> summary = [];
 
     for (var i = 0; i < chosenAnswers.length; i++) {
       summary.add(
@@ -33,8 +33,8 @@ class ResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final numTotalQuestions = questions.length;
-    final numCorrectQuestions = summaryData
+    var numTotalQuestions = questions.length;
+    var numCorrectQuestions = summaryData
         .where(
           (data) => data['user_answer'] == data['correct_answer'],
         )
@@ -59,7 +59,8 @@ class ResultsScreen extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            QuestionsSummary(summaryData: summaryData),
+            QuestionsSummary(summaryData),
+           
             const SizedBox(
               height: 30,
             ),

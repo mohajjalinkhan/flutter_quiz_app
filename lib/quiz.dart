@@ -3,7 +3,6 @@ import 'package:flutter_quiz_app/question_screen.dart';
 import 'package:flutter_quiz_app/result_screen.dart';
 import "package:flutter_quiz_app/start_screen.dart";
 import 'package:flutter_quiz_app/data/questions.dart';
-import 'package:flutter_quiz_app/question_screen.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -14,27 +13,21 @@ class Quiz extends StatefulWidget {
 class _QuizState extends State<Quiz> {
   List<String> _selectedAnswers = [];
   var _activeScreen = 'start-screen';
-   
-/* using ? for null
-Widget? activeScreen; */
 
-/* using init method to excute active screen functionality before build method excuted.
-@override
-void initState() {
-  activeScreen = StartScreen(switchScreen);
-  super.initState();
-}
-*/
-// solving switch screen using IF condition
-  var activeScreen = "start-screen";
-  // storing seclected answer in slecedAnwer List(Array)
-  List<String> selectedAnswer = [];
-
-// created Switch Method Function
-  void switchScreen() {
+  void _switchScreen() {
     setState(() {
-      activeScreen = "questions-screen";
+      _activeScreen = 'questions-screen';
     });
+  }
+
+  void _chooseAnswer(String answer) {
+    _selectedAnswers.add(answer);
+
+    if (_selectedAnswers.length == questions.length) {
+      setState(() {
+        _activeScreen = 'results-screen';
+      });
+    }
   }
 
   void restartQuiz() {
@@ -43,39 +36,35 @@ void initState() {
       _activeScreen = 'questions-screen';
     });
   }
-  // chooseSelectedAnswer Function
-  void chooseSelectedAnswerFun(String answer) {
-    selectedAnswer.add(answer);
-    // checking selected answer is equels to the give questions from our data model questions List.
-    if (selectedAnswer.length == questions.length) {
-      setState(() {
-        selectedAnswer = [];
-        activeScreen = "result-screen";
-      });
-    }
-  }
+
   @override
-  Widget build(BuildContext context) {
-    // created variable to switch screen
-    Widget screenWidget = StartScreen(switchScreen);
-    if (activeScreen == "questions-screen") {
-      screenWidget = QuestionScreen(onSelectAnswer: chooseSelectedAnswerFun);
+  Widget build(context) {
+    Widget screenWidget = StartScreen(_switchScreen);
+
+    if (_activeScreen == 'questions-screen') {
+      screenWidget = QuestionScreen(onSelectAnswer:_chooseAnswer );
     }
-    if (activeScreen == "result-screen") {
-      screenWidget = ResultsScreen(chosenAnswers: selectedAnswer, onRestart: restartQuiz,);
+
+    if (_activeScreen == 'results-screen') {
+      screenWidget = ResultsScreen(
+        chosenAnswers: _selectedAnswers,
+        onRestart: restartQuiz,
+      );
     }
+
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Container(
-          //created gardiented for background
           decoration: const BoxDecoration(
-            gradient: LinearGradient(colors: [
-              Color.fromARGB(255, 1, 3, 35),
-              Color.fromARGB(255, 41, 3, 63),
-            ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+            gradient: LinearGradient(
+              colors: [
+                Color.fromARGB(255, 53, 17, 95),
+                Color.fromARGB(255, 69, 31, 94),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
           ),
-          // created activeScreen to Switch between Pages using (? :) conditional method
           child: screenWidget,
         ),
       ),

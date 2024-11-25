@@ -15,7 +15,7 @@ class StartScreen extends StatelessWidget {
             "assets/images/quiz-logo.png",
             width: 300,
             // using this for color and opacity
-            color: const Color.fromARGB(255, 253, 252, 255),
+            color: const Color.fromARGB(255, 222, 209, 248),
           ),
           // added Sizedbox for padding (Spacing).
           const SizedBox(height: 80),
